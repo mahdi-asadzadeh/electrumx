@@ -108,7 +108,10 @@ class Daemon:
     def logged_url(self, url=None):
         '''The host and port part, for logging.'''
         url = url or self.current_url()
-        return url[url.rindex('@') + 1:]
+        try:
+            return url[url.rindex('@') + 1:]
+        except ValueError:
+            return url.replace('https://', '')
 
     def failover(self):
         '''Call to fail-over to the next daemon URL.
